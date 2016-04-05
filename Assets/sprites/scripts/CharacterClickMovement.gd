@@ -2,8 +2,8 @@
 extends Navigation2D
 
 export(NodePath) var playerPath
-var player
-var terrain
+onready var player = get_node(playerPath)
+onready var terrain = get_parent()
 
 var begin=Vector2()
 var end=Vector2()
@@ -20,7 +20,7 @@ var speed = DEFAULT_SPEED
 
 func _process(delta):
 	if (path.size()>1):
-		print(speed)
+		#print(speed)
 		var to_walk = delta*speed
 		
 		while(to_walk>0 and path.size()>=2):
@@ -80,7 +80,12 @@ func _process(delta):
 		player.set_pos(atpos)
 		
 		# rescale selon la profondeur donnée par le terrain
+		print("Terrain Depth = ", terrain.get_scale(atpos))
 		player.set_scale(terrain.get_scale(atpos))
+		# modif du Z-index selon la profondeur donnée par le terrain.
+		player.set_z(terrain.get_scale(atpos).x/0.5*2.2)
+		print("ScaleX = ", terrain.get_scale(atpos).x/0.5)
+		print("PlayerZ = ", player.get_z())
 		
 		
 		if (path.size()<2):
@@ -141,12 +146,8 @@ func _ready():
 	##for nodesGrp in arrNodesInGrp:
 	##	if nodesGrp.get_name() == "player":
 	##		player = nodesGrp
-	player = get_node(playerPath)
 
 	player.get_node("sprite/anim").set_current_animation("idle_right")
-	
-	terrain = get_parent()
-	
 	set_process_input(true)
 	pass
 	
