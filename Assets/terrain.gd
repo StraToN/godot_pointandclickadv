@@ -2,8 +2,9 @@
 extends Sprite
 
 
-export(Image) var depthFile
-export(float) var nearScale = 0.9
+export(ImageTexture) var depthFileIT
+onready var depthFile = depthFileIT.get_data()
+export(float) var nearScale = 0.9	
 export(float) var farScale = 0.5
 var originalScale = farScale + (nearScale-farScale)/2
 

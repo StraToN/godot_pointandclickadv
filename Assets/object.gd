@@ -8,6 +8,7 @@ export (String,FILE) var ScriptRes = ""
 
 func get_interact_pos():
 	if has_node("interactpos"):
+		print("Object ", name, " Pos=", get_node("interactpos").get_global_pos())
 		return get_node("interactpos").get_global_pos()
 	else:
 		return get_global_pos()
@@ -27,7 +28,7 @@ func on_mouse_exit():
 
 func _input_event(ev):
 	if ev.is_pressed() and ev.button_index == BUTTON_LEFT:
-		get_tree().call_group(0, "Movement", "_go_to_object", get_interact_pos(), animation_arrived)
+		get_tree().call_group(0, "Movement", "_go_to_object", get_interact_pos(), self, animation_arrived)
 
 
 func _ready():
