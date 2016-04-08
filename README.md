@@ -1,2 +1,2 @@
 # godot_pointandclickadv
-Basic Point&amp;Click adventure game demo with Godot
+Basic Point and Click adventure game demo with Godot
