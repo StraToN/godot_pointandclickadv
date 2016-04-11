@@ -250,6 +250,7 @@ height = 20.0
 
 [node name="player" type="KinematicBody2D"]
 
+z/relative = false
 input/pickable = false
 collision/layers = 1
 collision/mask = 1
@@ -258,12 +259,27 @@ script/script = ExtResource( 1 )
 __meta__ = { "__editor_plugin_screen__":"2D" }
 terrainPath = null
 
+[node name="dialog" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+margin/left = -174.0
+margin/top = -298.0
+margin/right = 198.0
+margin/bottom = -275.0
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [node name="sprite" type="AnimatedSprite" parent="."]
 
 transform/pos = Vector2( -7.11774, -10.0975 )
 z/z = 1
 frames = SubResource( 1 )
 offset = Vector2( -1.25602, -119.423 )
+__meta__ = { "_editor_collapsed":true }
 
 [node name="anim" type="AnimationPlayer" parent="sprite"]
 
@@ -297,19 +313,5 @@ transform/scale = Vector2( 1.29247, 1.16531 )
 shape = SubResource( 16 )
 trigger = false
 _update_shape_index = -1
-
-[node name="dialog" type="Label" parent="."]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-margin/left = -175.0
-margin/top = -299.0
-margin/right = 197.0
-margin/bottom = -276.0
-align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
 

@@ -1,6 +1,8 @@
 
 extends KinematicBody2D
 
+onready var tester = get_node("../DebugNode")
+
 export(NodePath) var terrainPath
 onready var terrain = get_node(terrainPath) # "bg"
 
@@ -66,14 +68,14 @@ func _process(delta):
 				animation = "walk_leftfront"
 				next_idle = "idle_leftfront"
 			
-			# si aucune animation n'est en cours
+			# if no animation is running
 			if (not get_node("sprite/anim").is_playing()):
 				get_node("sprite/anim").play(animation)
-			else: # une animation est déjà en cours, on la remplace si celle qu'on veut jouer est différente
+			else: # an animation is currently running, replace it if we wish to start a different one
 				if (animation != get_node("sprite/anim").get_current_animation()):
 					get_node("sprite/anim").play(animation)
 			
-			# waypoint atteint, on le supprime de la liste
+			# waypoint reached, remove it from the list
 			if (d<=to_walk):
 				path.remove(path.size()-1)
 				to_walk-=d
@@ -82,15 +84,16 @@ func _process(delta):
 				to_walk=0
 			
 			
-		# modifier position du sprite au temps T
+		# modify sprite position at time T
 		var atpos = path[path.size()-1]
 		set_pos(atpos)
 		
-		# rescale selon la profondeur donnée par le terrain
+		# rescale player sprite according to the depth given by the terrain
 		#print("Terrain Depth = ", terrain.get_scale(atpos))
-		set_scale(terrain.get_scale(atpos))
-		# modif du Z-index selon la profondeur donnée par le terrain.
-		set_z(terrain.get_scale(atpos).x/0.5*2.0)
+		#set_scale(terrain.get_scale(atpos))
+		_update_scale()
+		# modification of Z-index according to the depth given by the terrain
+		_update_z()
 		#print("ScaleX = ", terrain.get_scale(atpos).x/0.5)
 		#print("PlayerZ = ", get_z())
 		
@@ -115,16 +118,10 @@ func _process(delta):
 		set_process(false)
 
 
-func _draw():
-	if (path.size()):
-		for i in range(path.size()):
-			terrain.get_node("Navigation2D").draw_circle(path[i],10,Color(1,1,1))
-	print('===================')
 			
 			
 
 func _update_path():
-	#print("BEGIN = ", begin)
 	print("END = ", end)
 	var p = terrain.get_node("Navigation2D").get_simple_path(begin,end,true)
 	path=Array(p) # Vector2array to complex to use, convert to regular array
@@ -132,8 +129,18 @@ func _update_path():
 	
 	print (get_pos())
 	print ("path = ", path)
-	update()
+	tester.draw_points(p)
 	set_process(true)
+
+
+func _update_scale():
+	set_scale(terrain.get_scale(get_pos()))
+	_update_z()
+
+# update Z-index
+func _update_z():
+	var z = terrain.get_scale(get_pos()).x/0.5*2.3
+	set_z(z)
 
 # update speed according to distance to camera
 # the closer the player, the biggest his speed
@@ -146,12 +153,7 @@ func _update_speeddepth(begin, end):
 
 func _input(ev):
 	if (ev.type==InputEvent.MOUSE_BUTTON and ev.pressed and ev.button_index==BUTTON_LEFT):
-		print("CLICK TO, ", ev.pos)
-		
-		# si clic sur un objet, alors destination = Position2d associée à cet objet
 		begin=get_global_pos()
-		#mouse to local navigation coords
-		#end=ev.pos - get_global_pos()
 		end = ev.pos
 		_update_path()
 		
@@ -174,9 +176,11 @@ func _ready():
 	##for nodesGrp in arrNodesInGrp:
 	##	if nodesGrp.get_name() == "player":
 	##		player = nodesGrp
-	add_to_group("Movement")
+	add_to_group("Actors")
 	get_node("sprite/anim").set_current_animation("idle_right")
 	print("POSITION ", get_pos())
+	#print(terrain.get_scale(get_pos()))
+	
 	
 	set_process_input(true)
 	pass

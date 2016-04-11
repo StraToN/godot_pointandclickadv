@@ -28,11 +28,11 @@ func on_mouse_exit():
 
 func _input_event(ev):
 	if ev.is_pressed() and ev.button_index == BUTTON_LEFT:
-		get_tree().call_group(0, "Movement", "_go_to_object", get_interact_pos(), self, animation_arrived)
+		get_tree().call_group(0, "Actors", "_go_to_object", get_interact_pos(), self, animation_arrived)
 
 
 func _ready():
-	add_to_group("Movement")
+	add_to_group("Actors")
 	add_to_group("GUI")
 	connect("mouse_enter", self, "on_mouse_enter")
 	connect("mouse_exit", self, "on_mouse_exit")

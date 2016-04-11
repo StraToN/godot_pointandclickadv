@@ -1,20 +1,34 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=16 format=1]
 
 [ext_resource path="res://Assets/sprites/guybrush.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/rooms/desk/bg.jpg" type="Texture" id=2]
-[ext_resource path="res://Assets/terrain.gd" type="Script" id=3]
-[ext_resource path="res://Assets/rooms/desk/depth.png" type="Texture" id=4]
-[ext_resource path="res://Assets/rooms/desk/table.png" type="Texture" id=5]
-[ext_resource path="res://Assets/rooms/desk/bureau.png" type="Texture" id=6]
-[ext_resource path="res://Assets/object.gd" type="Script" id=7]
-[ext_resource path="res://Assets/gui.gd" type="Script" id=8]
+[ext_resource path="res://Assets/shaders/mask_shader.tres" type="Shader" id=2]
+[ext_resource path="res://Assets/rooms/desk/mask.png" type="Texture" id=3]
+[ext_resource path="res://Assets/rooms/desk/bg.jpg" type="Texture" id=4]
+[ext_resource path="res://Assets/terrain.gd" type="Script" id=5]
+[ext_resource path="res://Assets/rooms/desk/depth.png" type="Texture" id=6]
+[ext_resource path="res://Assets/rooms/desk/table.png" type="Texture" id=7]
+[ext_resource path="res://Assets/rooms/desk/bureau.png" type="Texture" id=8]
 [ext_resource path="res://Assets/rooms/desk/spot.png" type="Texture" id=9]
+[ext_resource path="res://Assets/object.gd" type="Script" id=10]
+[ext_resource path="res://Assets/gui.gd" type="Script" id=11]
+[ext_resource path="res://Assets/debugnode.gd" type="Script" id=12]
 
-[sub_resource type="NavigationPolygon" id=1]
+[sub_resource type="CanvasItemMaterial" id=1]
 
-vertices = Vector2Array( 1083.26, 546.305, 1129.91, 572.088, 1003.46, 574.543, 346.618, 546.305, 1089.4, 667.851, 953.118, 628.563, 927.336, 588.048, 495.174, 586.82, 1277.24, 666.623, 1274.78, 797.991, 66.6943, 790.625, 486.58, 626.108 )
-polygons = [ IntArray( 0, 1, 2, 3 ), IntArray( 2, 4, 5, 6 ), IntArray( 3, 2, 6, 7 ), IntArray( 4, 8, 9, 10 ), IntArray( 5, 4, 10, 11 ), IntArray( 11, 10, 3, 7 ) ]
-outlines = [ Vector2Array( 66.6943, 790.625, 346.618, 546.305, 1083.26, 546.305, 1129.91, 572.088, 1003.46, 574.543, 1089.4, 667.851, 1277.24, 666.623, 1274.78, 797.991 ), Vector2Array( 495.174, 586.82, 486.58, 626.108, 953.118, 628.563, 927.336, 588.048 ) ]
+shader/shader = ExtResource( 2 )
+shader/shading_mode = 0
+shader_param/Mask = ExtResource( 3 )
+shader_param/mask_white_bool = 1.0
+
+[sub_resource type="NavigationPolygon" id=2]
+
+vertices = Vector2Array( 972.762, 576.998, 1089.4, 667.851, 928.564, 627.336, 927.336, 588.048, 1083.26, 546.305, 1129.91, 572.088, 346.618, 546.305, 495.174, 586.82, 1277.24, 666.623, 1274.78, 797.991, 66.6943, 790.625, 486.58, 626.108 )
+polygons = [ IntArray( 0, 1, 2, 3 ), IntArray( 4, 5, 0, 6 ), IntArray( 6, 0, 3, 7 ), IntArray( 1, 8, 9, 10 ), IntArray( 2, 1, 10, 11 ), IntArray( 11, 10, 6, 7 ) ]
+outlines = [ Vector2Array( 66.6943, 790.625, 346.618, 546.305, 1083.26, 546.305, 1129.91, 572.088, 972.762, 576.998, 1089.4, 667.851, 1277.24, 666.623, 1274.78, 797.991 ), Vector2Array( 495.174, 586.82, 486.58, 626.108, 928.564, 627.336, 927.336, 588.048 ) ]
+
+[sub_resource type="CanvasItemMaterial" id=3]
+
+shader/shading_mode = 0
 
 [node name="World" type="Node2D"]
 
@@ -22,21 +36,25 @@ __meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 
-transform/pos = Vector2( 453.099, 755.73 )
+transform/pos = Vector2( 555, 571.57 )
 terrainPath = NodePath("../bg")
 
-[node name="sprite" parent="player"]
+[node name="fg" type="Sprite" parent="."]
 
-frame = 1
+visibility/visible = false
+material/material = SubResource( 1 )
+transform/pos = Vector2( 3.32397, 2.21606 )
+texture = ExtResource( 4 )
+centered = false
 
 [node name="bg" type="Sprite" parent="."]
 
-texture = ExtResource( 2 )
+texture = ExtResource( 4 )
 centered = false
 region_rect = Rect2( 0, 0, 1280, 800 )
-script/script = ExtResource( 3 )
+script/script = ExtResource( 5 )
 __meta__ = { "_edit_lock_":true }
-depthFileIT = ExtResource( 4 )
+depthFileIT = ExtResource( 6 )
 nearScale = 1.6
 farScale = 0.8
 
@@ -44,29 +62,52 @@ farScale = 0.8
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="bg/Navigation2D"]
 
-navpoly = SubResource( 1 )
+navpoly = SubResource( 2 )
 enabled = true
 
 [node name="table" type="Sprite" parent="bg"]
 
 transform/pos = Vector2( 1163.9, 548.99 )
-z/z = 6
+z/z = 5
 z/relative = false
-texture = ExtResource( 5 )
+texture = ExtResource( 7 )
 __meta__ = { "_edit_lock_":true }
 
 [node name="bureau" type="Sprite" parent="bg"]
 
-transform/pos = Vector2( 700.057, 497.568 )
+transform/pos = Vector2( 699.057, 496.568 )
 z/z = 5
 z/relative = false
-texture = ExtResource( 6 )
-__meta__ = { "_edit_lock_":true }
+texture = ExtResource( 8 )
+
+[node name="Light2D2" type="Light2D" parent="bg/bureau"]
+
+transform/pos = Vector2( -130.062, -94.898 )
+z/z = 4
+enabled = true
+texture = ExtResource( 9 )
+offset = Vector2( 0, 0 )
+scale = 1.0
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 5
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
 
 [node name="Objects" type="Node2D" parent="bg"]
 
 [node name="statue" type="Control" parent="bg/Objects"]
 
+material/material = SubResource( 3 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -75,7 +116,7 @@ margin/left = 928.0
 margin/top = 304.0
 margin/right = 1014.0
 margin/bottom = 406.0
-script/script = ExtResource( 7 )
+script/script = ExtResource( 10 )
 name = "Statue"
 animation_arrived = "idle_up"
 ScriptRes = ""
@@ -94,7 +135,7 @@ margin/left = 101.0
 margin/top = 241.0
 margin/right = 230.0
 margin/bottom = 596.0
-script/script = ExtResource( 7 )
+script/script = ExtResource( 10 )
 name = "shelf"
 animation_arrived = "idle_leftfront"
 ScriptRes = ""
@@ -113,10 +154,10 @@ margin/left = 540.0
 margin/top = 377.0
 margin/right = 594.0
 margin/bottom = 480.0
-script/script = ExtResource( 7 )
+script/script = ExtResource( 10 )
 name = "lamp"
 animation_arrived = "idle_rightfront"
-ScriptRes = ""
+ScriptRes = "res://Assets/rooms/desk/objects/lamp.json"
 
 [node name="interactpos" type="Position2D" parent="bg/Objects/desk_lamp"]
 
@@ -139,7 +180,7 @@ autowrap = true
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script/script = ExtResource( 8 )
+script/script = ExtResource( 11 )
 
 [node name="Light2D" type="Light2D" parent="bg"]
 
@@ -185,28 +226,6 @@ shadow/buffer_size = 2048
 shadow/esm_multiplier = 80.0
 shadow/item_mask = 1
 
-[node name="Light2D2" type="Light2D" parent="bg"]
-
-transform/pos = Vector2( 569.995, 402.67 )
-enabled = true
-texture = ExtResource( 9 )
-offset = Vector2( 0, 0 )
-scale = 1.0
-color = Color( 1, 1, 1, 1 )
-energy = 1.0
-mode = 0
-range/height = 0.0
-range/z_min = -1024
-range/z_max = 1024
-range/layer_min = 0
-range/layer_max = 0
-range/item_mask = 1
-shadow/enabled = false
-shadow/color = Color( 0, 0, 0, 0 )
-shadow/buffer_size = 2048
-shadow/esm_multiplier = 80.0
-shadow/item_mask = 1
-
 [node name="Light2D3" type="Light2D" parent="bg"]
 
 transform/pos = Vector2( 1158.18, 251.262 )
@@ -228,6 +247,11 @@ shadow/color = Color( 0, 0, 0, 0 )
 shadow/buffer_size = 2048
 shadow/esm_multiplier = 80.0
 shadow/item_mask = 1
+
+[node name="DebugNode" type="Node2D" parent="."]
+
+z/z = 10
+script/script = ExtResource( 12 )
 
 
 [editable path="player"]

@@ -24,6 +24,8 @@ func get_scale_diff(begin, end):
 	return abs( (get_scale(begin) - get_scale(end)).x)
 	
 func _ready():
-	# Initialization here
+	# bg is now ready, notify actors
+	get_tree().call_group(0, "Actors", "_update_scale")
+	
 	
 	pass

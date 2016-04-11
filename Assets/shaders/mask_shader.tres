@@ -1,0 +1,7 @@
+[gd_resource type="CanvasItemShaderGraph" format=1]
+
+[resource]
+
+_code = { "fragment":"vec3 nd1sl2=vec3(UV,0);\nvec4 rt_default_tex3=tex(TEXTURE,nd1sl2.xy);\nvec3 nd3sl0=rt_default_tex3.rgb;\nfloat nd3sl1=rt_default_tex3.a;\nuniform texture Mask;vec4 rt_read_tex2=tex(Mask,nd1sl2.xy);\nvec3 nd2sl0=rt_read_tex2.rgb;\nfloat nd2sl1=rt_read_tex2.a;\nfloat nd4sl0=nd2sl0.x;\nfloat nd4sl1=nd2sl0.y;\nfloat nd4sl2=nd2sl0.z;\nuniform float mask_white_bool=0;\nfloat nd8sl0=mask_white_bool;\nfloat nd5sl0=nd4sl0-nd8sl0;\nfloat nd6sl0=nd8sl0-nd4sl0;\nfloat nd9sl0=max(nd5sl0,nd6sl0);\nfloat nd7sl0=nd3sl1*nd9sl0;\nCOLOR.rgb=nd3sl0;\nCOLOR.a=nd7sl0;\n", "fragment_ofs":0, "light":"", "light_ofs":0, "vertex":"", "vertex_ofs":0 }
+_data = { "shaders":[ [ 0, 33, Vector2( 243, 30 ), null, null, [  ] ], [ 0, 33, Vector2( 1141, -109 ), null, null, [ 0, 3, 0, 1, 7, 0 ], 1, 0, Vector2( 131, -52 ), null, null, [  ], 2, 30, Vector2( 419, -33 ), "Mask", null, [ 0, 1, 2 ], 3, 32, Vector2( 657, -151 ), null, null, [ 0, 1, 2 ], 4, 18, Vector2( 548, 68 ), null, null, [ 0, 2, 0 ], 5, 7, Vector2( 713, -77 ), 1, null, [ 0, 4, 0, 1, 8, 0 ], 6, 7, Vector2( 708, 35 ), 1, null, [ 0, 8, 0, 1, 4, 0 ], 7, 7, Vector2( 979, -70 ), 2, null, [ 0, 3, 1, 1, 9, 0 ], 8, 26, Vector2( 343, -153 ), "mask_white_bool", 0.0, [  ], 9, 7, Vector2( 839, -29 ), 6, null, [ 0, 5, 0, 1, 6, 0 ], 10, 34, Vector2( 164, -229 ), "mask_white\n0 or 1\nToggles black\nor white\nmasking\n", null, [  ] ], [ 0, 33, Vector2( 250, 20 ), null, null, [  ] ] ] }
+
