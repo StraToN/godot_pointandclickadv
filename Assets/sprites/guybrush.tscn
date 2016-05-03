@@ -278,8 +278,8 @@ max_lines_visible = -1
 transform/pos = Vector2( -7.11774, -10.0975 )
 z/z = 1
 frames = SubResource( 1 )
+frame = 1
 offset = Vector2( -1.25602, -119.423 )
-__meta__ = { "_editor_collapsed":true }
 
 [node name="anim" type="AnimationPlayer" parent="sprite"]
 

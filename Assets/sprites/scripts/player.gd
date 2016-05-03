@@ -20,8 +20,15 @@ var target_obj
 const DEFAULT_SPEED = 150.0
 var speed = DEFAULT_SPEED
 
-func interact(target):
-	self.get_node("dialog").set_text("This is a " + target.name)
+func interact(target, action):
+	var actionList = target.get_actions()
+	
+	if (!actionList.empty()):
+		if (action == "primary_action" or action == "secondary_action"):
+			action = actionList[action]
+		printt("ACTION : ", action, "RESULT : ", actionList[action])
+	else:
+		print("LOG ERROR: Hostspot '"+str(target.name)+"' has no script!")
 	pass
 
 func _process(delta):
@@ -112,7 +119,7 @@ func _process(delta):
 				
 		# action if player arrived to destination
 		if (arrived_to_destination && target_obj):
-			interact(target_obj)
+			interact(target_obj, "primary_action")
 
 	else:
 		set_process(false)
@@ -122,13 +129,13 @@ func _process(delta):
 			
 
 func _update_path():
-	print("END = ", end)
+	#print("END = ", end)
 	var p = terrain.get_node("Navigation2D").get_simple_path(begin,end,true)
 	path=Array(p) # Vector2array to complex to use, convert to regular array
 	path.invert()
 	
-	print (get_pos())
-	print ("path = ", path)
+	#print (get_pos())
+	#print ("path = ", path)
 	tester.draw_points(p)
 	set_process(true)
 
@@ -178,9 +185,7 @@ func _ready():
 	##		player = nodesGrp
 	add_to_group("Actors")
 	get_node("sprite/anim").set_current_animation("idle_right")
-	print("POSITION ", get_pos())
 	#print(terrain.get_scale(get_pos()))
-	
 	
 	set_process_input(true)
 	pass

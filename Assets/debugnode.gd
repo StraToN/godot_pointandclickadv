@@ -15,7 +15,6 @@ func _draw():
 			draw_circle(points[i], 10.0, color) # draw circle
 			if i > 0:
 				draw_line(points[i-1], points[i], color) # draw lines
-				print("DRAWING")
 
 
 

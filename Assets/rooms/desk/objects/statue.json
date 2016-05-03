@@ -1,0 +1,7 @@
+{
+	"primary_action": "look_at",
+	"secondary_action": "take",
+  "look_at": ["It is a statue of some roman emperor, I think.", "Seriously, who puts statues in his desk room?" ],
+  "use": "I can't use it.",
+  "take": "It is better where it is."
+}
