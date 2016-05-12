@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=1]
+[gd_scene load_steps=84 format=1]
 
 [ext_resource path="res://Assets/sprites/scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/sprites/MI3/png/00.png" type="Texture" id=2]
@@ -66,13 +66,21 @@
 [ext_resource path="res://Assets/sprites/MI3/png/64.png" type="Texture" id=64]
 [ext_resource path="res://Assets/sprites/MI3/png/65.png" type="Texture" id=65]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="CanvasItemShader" id=1]
+
+_code = { "fragment":"color shadow2 = color( (0.60), (0.22), (0.04), 1.0);\ncolor shadow = color(155/255, 55/255, 11/255, 1.0);\n\nbool is_equal(color c1, color c2) {\n\tfloat epsilon = 0.0001;\n\t\n\treturn abs(c1.x-c2.x) < epsilon*abs(c1.x) && abs(c1.y-c2.y) < epsilon*abs(c1.y) && abs(c1.z-c2.z) < epsilon*abs(c1.z) && abs(c1.w-c2.w) < epsilon*abs(c1.w);\n}\n\nif (is_equal( tex(TEXTURE, UV), shadow)) {\n\tCOLOR = color(0.0, 0.0, 0.0, 0.2);\n\t//COLOR = color(0.0, 1.0, 0.0, 0.2);\n}", "fragment_ofs":0, "light":"", "light_ofs":0, "vertex":"", "vertex_ofs":0 }
+
+[sub_resource type="CanvasItemMaterial" id=2]
+
+shader/shader = SubResource( 1 )
+shader/shading_mode = 0
+
+[sub_resource type="SpriteFrames" id=3]
 
 frames = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 40 ), ExtResource( 41 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 47 ), ExtResource( 48 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 51 ), ExtResource( 52 ), ExtResource( 53 ), ExtResource( 54 ), ExtResource( 55 ), ExtResource( 56 ), ExtResource( 57 ), ExtResource( 58 ), ExtResource( 59 ), ExtResource( 60 ), ExtResource( 61 ), ExtResource( 62 ), ExtResource( 63 ), ExtResource( 64 ), ExtResource( 65 ) ]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=4]
 
-resource/name = "idle_front"
 length = 0.1
 loop = false
 step = 0.1
@@ -81,7 +89,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 1 ] }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=5]
 
 length = 0.01
 loop = false
@@ -91,7 +99,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 0 ] }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=6]
 
 length = 0.01
 loop = false
@@ -101,9 +109,8 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 3 ] }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 
-resource/name = "idle_rightfront"
 length = 0.01
 loop = false
 step = 0.1
@@ -112,9 +119,8 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 2 ] }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=8]
 
-resource/name = "idle_rightup"
 length = 0.01
 loop = false
 step = 0.1
@@ -123,9 +129,8 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 5 ] }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 
-resource/name = "idle_up"
 length = 0.01
 loop = false
 step = 0.1
@@ -134,7 +139,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 4 ] }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 
 length = 1.8
 loop = true
@@ -144,7 +149,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.8 ), "transitions":FloatArray( 1, 1 ), "values":[ 6, 15 ] }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 
 length = 1.5
 loop = true
@@ -158,7 +163,7 @@ tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
 tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ false ] }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=12]
 
 length = 1.5
 loop = true
@@ -172,7 +177,7 @@ tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
 tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ false ] }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=13]
 
 length = 1.5
 loop = true
@@ -186,7 +191,7 @@ tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
 tracks/1/keys = { "cont":true, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ false ] }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=14]
 
 length = 1.5
 loop = true
@@ -200,7 +205,7 @@ tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
 tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ true ] }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=15]
 
 length = 1.5
 loop = true
@@ -214,7 +219,7 @@ tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
 tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ true ] }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=16]
 
 length = 1.5
 loop = true
@@ -228,7 +233,7 @@ tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
 tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ true ] }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=17]
 
 length = 1.6
 loop = true
@@ -242,7 +247,7 @@ tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
 tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ false ] }
 
-[sub_resource type="CapsuleShape2D" id=16]
+[sub_resource type="CapsuleShape2D" id=18]
 
 custom_solver_bias = 0.0
 radius = 10.0
@@ -275,10 +280,10 @@ max_lines_visible = -1
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 
+material/material = SubResource( 2 )
 transform/pos = Vector2( -7.11774, -10.0975 )
 z/z = 1
-frames = SubResource( 1 )
-frame = 1
+frames = SubResource( 3 )
 offset = Vector2( -1.25602, -119.423 )
 
 [node name="anim" type="AnimationPlayer" parent="sprite"]
@@ -286,20 +291,20 @@ offset = Vector2( -1.25602, -119.423 )
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/idle_front = SubResource( 2 )
-anims/idle_leftfront = SubResource( 3 )
-anims/idle_leftup = SubResource( 4 )
-anims/idle_rightfront = SubResource( 5 )
-anims/idle_rightup = SubResource( 6 )
-anims/idle_up = SubResource( 7 )
-anims/walk_front = SubResource( 8 )
-anims/walk_left = SubResource( 9 )
-anims/walk_leftfront = SubResource( 10 )
-anims/walk_leftup = SubResource( 11 )
-anims/walk_right = SubResource( 12 )
-anims/walk_rightfront = SubResource( 13 )
-anims/walk_rightup = SubResource( 14 )
-anims/walk_up = SubResource( 15 )
+anims/idle_front = SubResource( 4 )
+anims/idle_leftfront = SubResource( 5 )
+anims/idle_leftup = SubResource( 6 )
+anims/idle_rightfront = SubResource( 7 )
+anims/idle_rightup = SubResource( 8 )
+anims/idle_up = SubResource( 9 )
+anims/walk_front = SubResource( 10 )
+anims/walk_left = SubResource( 11 )
+anims/walk_leftfront = SubResource( 12 )
+anims/walk_leftup = SubResource( 13 )
+anims/walk_right = SubResource( 14 )
+anims/walk_rightfront = SubResource( 15 )
+anims/walk_rightup = SubResource( 16 )
+anims/walk_up = SubResource( 17 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -310,7 +315,7 @@ autoplay = ""
 transform/pos = Vector2( 0.949911, 1.22454 )
 transform/rot = 90.0
 transform/scale = Vector2( 1.29247, 1.16531 )
-shape = SubResource( 16 )
+shape = SubResource( 18 )
 trigger = false
 _update_shape_index = -1
 

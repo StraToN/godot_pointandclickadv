@@ -103,6 +103,7 @@ func _process(delta):
 		_update_z()
 		#print("ScaleX = ", terrain.get_scale(atpos).x/0.5)
 		#print("PlayerZ = ", get_z())
+		terrain.update_shader(get_pos())
 		
 		
 		if (path.size()<2):
