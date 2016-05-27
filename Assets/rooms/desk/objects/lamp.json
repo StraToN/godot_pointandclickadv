@@ -1,6 +1,6 @@
 {
-    "primary_action": "use",
-    "secondary_action": "look_at",
+    "primary_action": "look_at",
+    "secondary_action": "use",
     "look_at": ["This is a lamp.", "A nice specimen if you ask me." ],
     "use": "I can't use it."
 }

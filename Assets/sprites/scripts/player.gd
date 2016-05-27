@@ -1,22 +1,28 @@
 
 extends KinematicBody2D
 
+### NODES
 onready var tester = get_node("../DebugNode")
-
 export(NodePath) var terrainPath
 onready var terrain = get_node(terrainPath) # "bg"
+var animNode = "sprite/anim" # "sprite/anim"
+onready var timerNode = Timer.new()
 
+### PATH
 var begin=Vector2()
 var end=Vector2()
 var path=[]
 
+### ANIMATIONS
 var animation = "idle_rightfront"
 var next_idle = "idle_rightfront"
 var force_next_idle = ""
-var arrived_to_destination = false
 
+### MOVE TO OBJECTS
+var arrived_to_destination = false
 var target_obj
 
+### MOVEMENT SPEED
 const DEFAULT_SPEED = 150.0
 var speed = DEFAULT_SPEED
 
@@ -27,8 +33,9 @@ func interact(target, action):
 		if (action == "primary_action" or action == "secondary_action"):
 			action = actionList[action]
 		printt("ACTION : ", action, "RESULT : ", actionList[action])
+		get_node("dialog").set_text(str(actionList[action]))
 	else:
-		print("LOG ERROR: Hostspot '"+str(target.name)+"' has no script!")
+		print("Warning: player.gd: interact: Hostspot '"+str(target.name)+"' has no script!")
 	pass
 
 func _process(delta):
@@ -76,11 +83,11 @@ func _process(delta):
 				next_idle = "idle_leftfront"
 			
 			# if no animation is running
-			if (not get_node("sprite/anim").is_playing()):
-				get_node("sprite/anim").play(animation)
+			if (not get_node(animNode).is_playing()):
+				get_node(animNode).play(animation)
 			else: # an animation is currently running, replace it if we wish to start a different one
-				if (animation != get_node("sprite/anim").get_current_animation()):
-					get_node("sprite/anim").play(animation)
+				if (animation != get_node(animNode).get_current_animation()):
+					get_node(animNode).play(animation)
 			
 			# waypoint reached, remove it from the list
 			if (d<=to_walk):
@@ -103,7 +110,7 @@ func _process(delta):
 		_update_z()
 		#print("ScaleX = ", terrain.get_scale(atpos).x/0.5)
 		#print("PlayerZ = ", get_z())
-		terrain.update_shader(get_pos())
+
 		
 		
 		if (path.size()<2):
@@ -113,10 +120,10 @@ func _process(delta):
 				get_node("sprite").set_flip_h(false)
 			
 			if force_next_idle != "":
-				get_node("sprite/anim").play(force_next_idle)
+				get_node(animNode).play(force_next_idle)
 				force_next_idle = ""
 			else:
-				get_node("sprite/anim").play(next_idle)
+				get_node(animNode).play(next_idle)
 				
 		# action if player arrived to destination
 		if (arrived_to_destination && target_obj):
@@ -164,9 +171,9 @@ func _input(ev):
 		begin=get_global_pos()
 		end = ev.pos
 		_update_path()
-		
-		
-		
+
+
+
 func _go_to_object(pos, obj, animation_arrived):
 	target_obj = obj
 	
@@ -185,7 +192,9 @@ func _ready():
 	##	if nodesGrp.get_name() == "player":
 	##		player = nodesGrp
 	add_to_group("Actors")
-	get_node("sprite/anim").set_current_animation("idle_right")
+	#get_node(animNode).set_current_animation("idle_right")
+	get_node(animNode).set_current_animation("idle_right")
+	add_child(timerNode)
 	#print(terrain.get_scale(get_pos()))
 	
 	set_process_input(true)

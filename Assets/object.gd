@@ -2,6 +2,7 @@
 extends Area2D
 
 export var name = ""
+
 # "walk_up", "walk_rightup", "walk_right", "walk_rightfront", "walk_front", "walk_leftfront", "walk_left", "walk_leftup"
 export (String, "idle_up", "idle_rightup", "idle_rightfront", "idle_front", "idle_leftfront", "idle_leftup") var animation_arrived = "idle_rightfront"
 export (String,FILE) var ScriptRes = ""
@@ -17,24 +18,11 @@ func get_interact_pos():
 		return get_global_pos()
 
 
-func on_mouse_enter():
-	if name == "":
-		name = "noname_" + get_name()
-	get_tree().call_group(0, "GUI", "_on_need_show", name)
-	pointing = true
-	#print(name)
-
-
-func on_mouse_exit():
-	get_tree().call_group(0, "GUI", "_on_need_show", "")
-	pointing = false
-	#print("exit")
-
-
 func _input_event( viewport, event, shape_idx ):
 	if event.is_pressed() and event.button_index == BUTTON_LEFT:
-		print("INPUT")
-		get_tree().call_group(0, "Actors", "_go_to_object", get_interact_pos(), self, animation_arrived)
+		#print("INPUT")
+		#get_tree().call_group(0, "Actors", "_go_to_object", get_interact_pos(), self, animation_arrived)
+		get_node("../../../player")._go_to_object(get_interact_pos(), self, animation_arrived)
 
 func prepare_object_script():
 	var file = File.new()
@@ -46,10 +34,9 @@ func prepare_object_script():
 
 
 func _ready():
-	add_to_group("Actors")
 	add_to_group("GUI")
-	connect("mouse_enter", self, "on_mouse_enter")
-	connect("mouse_exit", self, "on_mouse_exit")
+	connect("mouse_enter", get_node("../../gui_label"), "on_mouse_enter_object", [name])
+	connect("mouse_exit", get_node("../../gui_label"), "on_mouse_exit_object")
 	connect("input_event", self, "_input_event")
 	
 	if (ScriptRes != ""):
@@ -64,4 +51,4 @@ func set_actions(new_actions):
 
 func get_actions():
 	return actions
-	
+

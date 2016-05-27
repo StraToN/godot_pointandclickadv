@@ -1,0 +1,6 @@
+[gd_resource type="CanvasItemShader" format=1]
+
+[resource]
+
+_code = { "fragment":"uniform vec2 actorPos;\nvec2 actorPosLocal.xy = actorPos.xy;\nbool actorIsBehind;\ncolor WHITE = color(1.0, 1.0, 1.0, 1.0);\ncolor RED = color(1.0, 0.0, 0.0, 1.0);\ncolor GREEN = color(0.0, 1.0, 0.0, 1.0);\n\nbool is_equal(color c1, color c2) {\n\tfloat epsilon = 0.0001;\n\treturn abs(c1.x-c2.x) < epsilon*abs(c1.x) && abs(c1.y-c2.y) < epsilon*abs(c1.y) && abs(c1.z-c2.z) < epsilon*abs(c1.z) && abs(c1.w-c2.w) < epsilon*abs(c1.w);\n}\n\n// INIT\nif (is_equal(tex(TEXTURE, vec2(700,550) ), WHITE)) {\n\tactorIsBehind = true;\n}\nelse {\n\tactorIsBehind = false;\n}\n//actorIsBehind = true;\n\nif (is_equal( tex(TEXTURE, UV), WHITE)) {\n\tif (actorIsBehind) {\n\t\t//COLOR.rgb = texscreen(SCREEN_UV);\n\t\tCOLOR=RED;\n\t}\n\telse {\n\t\tCOLOR=tex(TEXTURE, UV);\n\t}\n}\nelse {\n\tCOLOR.rgb = texscreen(SCREEN_UV);\n}\n\n// -----------------------\n// Apply Shader\n\n", "fragment_ofs":0, "light":"", "light_ofs":0, "vertex":"", "vertex_ofs":0 }
+
