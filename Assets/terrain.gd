@@ -3,18 +3,27 @@ extends Sprite
 
 
 export(ImageTexture) var depthFileIT
-onready var depthFile = depthFileIT.get_data()
+var depthFile
 
-export(float) var nearScale = 0.9
-export(float) var farScale = 0.5
-var originalScale = farScale + (nearScale-farScale)/2
+export(float) var nearScale
+export(float) var farScale
+export(int) var nbZScales = 10
+onready var originalScale = farScale + (nearScale-farScale)/2
 
-
-
+# return a Z value between 1 and nbZScales
+# corresponding to pos position in the image
+func get_z_at_px(pos):
+	if (depthFile == null && depthFileIT != null):
+		depthFile = depthFileIT.get_data()
+	var depthPx = depthFile.get_pixel(pos.x, pos.y).gray() # 0 < depthPx < 1
+	#printt("pixel val = ", depthPx, "Z = ", int(depthPx * nbZScales + 1))
+	return int(depthPx * nbZScales + 1) # 1 < z < nbZScales
 
 func get_scale(pos):
-	var depthPx = depthFile.get_pixel(pos.x, pos.y)
-	return _get_scale_range(depthPx.gray())
+	if (depthFile == null && depthFileIT != null):
+		depthFile = depthFileIT.get_data()
+	var depthPx = depthFile.get_pixel(pos.x, pos.y).gray()
+	return _get_scale_range(depthPx)
 
 
 func _get_scale_range(r):
@@ -30,16 +39,9 @@ func get_scale_diff(begin, end):
 	
 func _ready():
 	# bg is now ready, notify actors to rescale them automatically according to their positions
-	get_tree().call_group(0, "Actors", "_update_scale")
+	get_tree().call_group(0, "Actors", "_update_scale", null)
+	get_tree().call_group(0, "Actors", "_update_z")
 	
-	# TODO : temporary.
-	for n in get_node("Masks").get_children():
-		if (n extends Light2D):
-			var pos2DZ = n.get_node("Position2D").get_pos()
-			
-			var scale = get_scale( pos2DZ ) / 0.5 * 3.2
-			n.set_z_range_min( 1 ) 
-			n.set_z_range_max( scale.x-1 ) 
-			print ("Obj ", n.get_name(), " = ", scale.x)
+	get_node("Masks").init_masks()
 		
 	pass

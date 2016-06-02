@@ -1,7 +1,7 @@
-[gd_scene load_steps=86 format=1]
+[gd_scene load_steps=88 format=1]
 
 [ext_resource path="res://Assets/sprites/scripts/player.gd" type="Script" id=1]
-[ext_resource path="res://Assets/fonts/efmi.fnt" type="BitmapFont" id=2]
+[ext_resource path="res://Assets/fonts/onesize/ONESIZE_.TTF" type="DynamicFontData" id=2]
 [ext_resource path="res://Assets/sprites/MI3/shadow.tres" type="Shader" id=3]
 [ext_resource path="res://Assets/sprites/MI3/png/00.png" type="Texture" id=4]
 [ext_resource path="res://Assets/sprites/MI3/png/01.png" type="Texture" id=5]
@@ -69,23 +69,28 @@
 [ext_resource path="res://Assets/sprites/MI3/png/64.png" type="Texture" id=67]
 [ext_resource path="res://Assets/sprites/MI3/png/65.png" type="Texture" id=68]
 
-[sub_resource type="CanvasItemMaterial" id=19]
+[sub_resource type="DynamicFont" id=1]
+
+size = 16
+font = ExtResource( 2 )
+
+[sub_resource type="CanvasItemMaterial" id=2]
 
 shader/shader = ExtResource( 3 )
 shader/shading_mode = 0
 shader_param/col = Color( 0.607843, 0.215686, 0.0431373, 1 )
 
-[sub_resource type="SpriteFrames" id=17]
+[sub_resource type="SpriteFrames" id=3]
 
 animations = [ { "frames":[ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 40 ), ExtResource( 41 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 47 ), ExtResource( 48 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 51 ), ExtResource( 52 ), ExtResource( 53 ), ExtResource( 54 ), ExtResource( 55 ), ExtResource( 56 ), ExtResource( 57 ), ExtResource( 58 ), ExtResource( 59 ), ExtResource( 60 ), ExtResource( 61 ), ExtResource( 62 ), ExtResource( 63 ), ExtResource( 64 ), ExtResource( 65 ), ExtResource( 66 ), ExtResource( 67 ), ExtResource( 68 ) ], "loop":true, "name":"default", "speed":5.0 } ]
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=4]
 
 custom_solver_bias = 0.0
 radius = 10.0
 height = 20.0
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=5]
 
 length = 0.1
 loop = false
@@ -95,7 +100,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 1 ] }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=6]
 
 length = 0.01
 loop = false
@@ -105,7 +110,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 0 ] }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 
 length = 0.01
 loop = false
@@ -115,7 +120,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 3 ] }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=8]
 
 length = 0.01
 loop = false
@@ -125,7 +130,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 2 ] }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 
 length = 0.01
 loop = false
@@ -135,7 +140,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 5 ] }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 
 length = 0.01
 loop = false
@@ -145,7 +150,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ 4 ] }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 
 length = 1.8
 loop = true
@@ -155,7 +160,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.8 ), "transitions":FloatArray( 1, 1 ), "values":[ 6, 15 ] }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=12]
 
 length = 1.5
 loop = true
@@ -169,34 +174,6 @@ tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
 tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ false ] }
 
-[sub_resource type="Animation" id=11]
-
-length = 1.5
-loop = true
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "values":[ 16, 27 ] }
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:flip_h")
-tracks/1/interp = 1
-tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ false ] }
-
-[sub_resource type="Animation" id=12]
-
-length = 1.5
-loop = true
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "values":[ 52, 63 ] }
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:flip_h")
-tracks/1/interp = 1
-tracks/1/keys = { "cont":true, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ false ] }
-
 [sub_resource type="Animation" id=13]
 
 length = 1.5
@@ -205,11 +182,11 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
-tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "values":[ 28, 39 ] }
+tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "values":[ 17, 28 ] }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
-tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ true ] }
+tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ false ] }
 
 [sub_resource type="Animation" id=14]
 
@@ -219,11 +196,11 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
-tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "values":[ 16, 27 ] }
+tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "values":[ 53, 64 ] }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
-tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ true ] }
+tracks/1/keys = { "cont":true, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ false ] }
 
 [sub_resource type="Animation" id=15]
 
@@ -233,13 +210,41 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
-tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "values":[ 52, 63 ] }
+tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "values":[ 29, 40 ] }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
 tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ true ] }
 
 [sub_resource type="Animation" id=16]
+
+length = 1.5
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "values":[ 17, 28 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ true ] }
+
+[sub_resource type="Animation" id=17]
+
+length = 1.5
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/keys = { "cont":true, "times":FloatArray( 0, 1.5 ), "transitions":FloatArray( 1, 1 ), "values":[ 53, 64 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ true ] }
+
+[sub_resource type="Animation" id=18]
 
 length = 1.6
 loop = true
@@ -253,9 +258,13 @@ tracks/1/path = NodePath(".:flip_h")
 tracks/1/interp = 1
 tracks/1/keys = { "cont":false, "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "values":[ false ] }
 
+[sub_resource type="DynamicFont" id=19]
+
+size = 20
+font = ExtResource( 2 )
+
 [node name="player" type="KinematicBody2D"]
 
-visibility/light_mask = 2
 z/relative = false
 input/pickable = false
 collision/layers = 1
@@ -265,16 +274,18 @@ script/script = ExtResource( 1 )
 __meta__ = { "__editor_plugin_screen__":"2D" }
 terrainPath = null
 
-[node name="dialog" type="Label" parent="."]
+[node name="debug_zvalue" type="Label" parent="."]
 
+visibility/blend_mode = 1
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
-margin/left = -174.0
-margin/top = -298.0
-margin/right = 198.0
-margin/bottom = -275.0
-custom_fonts/font = ExtResource( 2 )
+margin/left = 43.0
+margin/top = -245.0
+margin/right = 73.0
+margin/bottom = -217.0
+custom_fonts/font = SubResource( 1 )
+text = "debug_z"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
@@ -282,9 +293,9 @@ max_lines_visible = -1
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 
-material/material = SubResource( 19 )
+material/material = SubResource( 2 )
 transform/pos = Vector2( -0.415837, -5.76483 )
-frames = SubResource( 17 )
+frames = SubResource( 3 )
 animation = "default"
 offset = Vector2( 2.43024, -124.666 )
 
@@ -293,7 +304,7 @@ offset = Vector2( 2.43024, -124.666 )
 transform/pos = Vector2( -0.856308, 0.92086 )
 transform/rot = 90.0
 transform/scale = Vector2( 1.29247, 1.16531 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 trigger = false
 _update_shape_index = -1
 
@@ -302,23 +313,40 @@ _update_shape_index = -1
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/idle_front = SubResource( 3 )
-anims/idle_leftfront = SubResource( 4 )
-anims/idle_leftup = SubResource( 5 )
-anims/idle_rightfront = SubResource( 6 )
-anims/idle_rightup = SubResource( 7 )
-anims/idle_up = SubResource( 8 )
-anims/walk_front = SubResource( 9 )
-anims/walk_left = SubResource( 10 )
-anims/walk_leftfront = SubResource( 11 )
-anims/walk_leftup = SubResource( 12 )
-anims/walk_right = SubResource( 13 )
-anims/walk_rightfront = SubResource( 14 )
-anims/walk_rightup = SubResource( 15 )
-anims/walk_up = SubResource( 16 )
+anims/idle_front = SubResource( 5 )
+anims/idle_leftfront = SubResource( 6 )
+anims/idle_leftup = SubResource( 7 )
+anims/idle_rightfront = SubResource( 8 )
+anims/idle_rightup = SubResource( 9 )
+anims/idle_up = SubResource( 10 )
+anims/walk_front = SubResource( 11 )
+anims/walk_left = SubResource( 12 )
+anims/walk_leftfront = SubResource( 13 )
+anims/walk_leftup = SubResource( 14 )
+anims/walk_right = SubResource( 15 )
+anims/walk_rightfront = SubResource( 16 )
+anims/walk_rightup = SubResource( 17 )
+anims/walk_up = SubResource( 18 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
+
+[node name="dialog" type="Label" parent="."]
+
+visibility/blend_mode = 1
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+margin/left = -241.0
+margin/top = -312.0
+margin/right = 232.0
+margin/bottom = -247.0
+custom_fonts/font = SubResource( 19 )
+text = "This is a dialog"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 

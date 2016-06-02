@@ -1,0 +1,6 @@
+{
+    "primary_action": "look_at",
+    "secondary_action": "use",
+    "look_at": ["Wow!", "A shelf.", "With books." ],
+    "use": "I can't use it."
+}

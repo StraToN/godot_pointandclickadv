@@ -32,11 +32,15 @@ func prepare_object_script():
 	actions.parse_json(actionsString)
 	#print(actions)
 
+func on_mouse_enter_object(name):
+	get_tree().call_group(0, "GUI", "on_mouse_enter_object", name)
+	
+func on_mouse_exit_object():
+	get_tree().call_group(0, "GUI", "on_mouse_exit_object")
 
 func _ready():
-	add_to_group("GUI")
-	connect("mouse_enter", get_node("../../gui_label"), "on_mouse_enter_object", [name])
-	connect("mouse_exit", get_node("../../gui_label"), "on_mouse_exit_object")
+	connect("mouse_enter", self, "on_mouse_enter_object", [name])
+	connect("mouse_exit", self, "on_mouse_exit_object")
 	connect("input_event", self, "_input_event")
 	
 	if (ScriptRes != ""):

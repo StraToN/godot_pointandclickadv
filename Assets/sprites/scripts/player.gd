@@ -5,8 +5,13 @@ extends KinematicBody2D
 onready var tester = get_node("../DebugNode")
 export(NodePath) var terrainPath
 onready var terrain = get_node(terrainPath) # "bg"
-var animNode = "sprite/anim" # "sprite/anim"
+var animNode = "sprite/anim"
+
+### DIALOGS
+var arr_lines
+var current_line
 onready var timerNode = Timer.new()
+
 
 ### PATH
 var begin=Vector2()
@@ -33,10 +38,41 @@ func interact(target, action):
 		if (action == "primary_action" or action == "secondary_action"):
 			action = actionList[action]
 		printt("ACTION : ", action, "RESULT : ", actionList[action])
-		get_node("dialog").set_text(str(actionList[action]))
+		arr_lines = actionList[action]
+		say(actionList[action])
 	else:
 		print("Warning: player.gd: interact: Hostspot '"+str(target.name)+"' has no script!")
 	pass
+	
+func say(arr_lines):
+	var nbLines = arr_lines.size()
+	current_line = 0
+	say_line(arr_lines, current_line)
+	
+func say_line(arr_lines, curr_line=0):
+	if (curr_line == arr_lines.size()):
+		return
+	var text = arr_lines[current_line]
+	print(text.length())
+	if (text.length() > 30):
+		text = add_return_on_first_space(text, 30)
+	var wait_time = text.length()*0.1
+	if (wait_time < 2.0):
+		wait_time = 2.0
+	timerNode.set_wait_time(wait_time)
+	timerNode.start()
+	get_node("dialog").set_text(str(current_line)+": " + text)
+
+func on_dialog_line_timeout():
+	print("Warning: player.gd: dialog line timeout.")
+	get_node("dialog").set_text("")
+	timerNode.stop()
+	current_line += 1
+	say_line(arr_lines, current_line)
+
+func add_return_on_first_space(text, start_pos):
+	var space_pos = text.find(" ", start_pos)
+	return text.insert(space_pos, "\n")
 
 func _process(delta):
 	arrived_to_destination = false
@@ -105,13 +141,11 @@ func _process(delta):
 		# rescale player sprite according to the depth given by the terrain
 		#print("Terrain Depth = ", terrain.get_scale(atpos))
 		#set_scale(terrain.get_scale(atpos))
-		_update_scale()
+		_update_scale(atpos)
 		# modification of Z-index according to the depth given by the terrain
 		_update_z()
 		#print("ScaleX = ", terrain.get_scale(atpos).x/0.5)
 		#print("PlayerZ = ", get_z())
-
-		
 		
 		if (path.size()<2):
 			path=[]
@@ -128,13 +162,17 @@ func _process(delta):
 		# action if player arrived to destination
 		if (arrived_to_destination && target_obj):
 			interact(target_obj, "primary_action")
+			target_obj = null
+			
+		# update debug labels
+		update_debug_labels()
 
 	else:
 		set_process(false)
 
 
-			
-			
+func update_debug_labels():
+	get_node("debug_zvalue").set_text("Z = " + str(get_z()))
 
 func _update_path():
 	#print("END = ", end)
@@ -148,13 +186,20 @@ func _update_path():
 	set_process(true)
 
 
-func _update_scale():
-	set_scale(terrain.get_scale(get_pos()))
-	_update_z()
+func _update_scale(pos):
+	if (pos==null):
+		pos = get_pos()
+	get_node("sprite").set_scale(terrain.get_scale(pos))
+	
+	# update dialog label position so it is always above the sprite
+	#printt(get_node("sprite").get_pos())
+	var dialog_pos = get_node("dialog").get_pos()
+	dialog_pos.y - 1
+	get_node("dialog").set_pos(dialog_pos)
 
 # update Z-index
 func _update_z():
-	var z = terrain.get_scale(get_pos()).x/0.5*2.3
+	var z = terrain.get_z_at_px(get_pos())
 	set_z(z)
 
 # update speed according to distance to camera
@@ -184,6 +229,9 @@ func _go_to_object(pos, obj, animation_arrived):
 	ev.pos = pos
 	force_next_idle = animation_arrived
 	_input(ev)
+	
+func _enter_tree():
+	add_to_group("Actors")
 
 func _ready():
 	# Initialization here
@@ -191,9 +239,12 @@ func _ready():
 	##for nodesGrp in arrNodesInGrp:
 	##	if nodesGrp.get_name() == "player":
 	##		player = nodesGrp
-	add_to_group("Actors")
+	
 	#get_node(animNode).set_current_animation("idle_right")
 	get_node(animNode).set_current_animation("idle_right")
+	
+	timerNode.set_timer_process_mode(0)
+	timerNode.connect("timeout", self, "on_dialog_line_timeout")
 	add_child(timerNode)
 	#print(terrain.get_scale(get_pos()))
 	
