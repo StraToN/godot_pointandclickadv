@@ -8,8 +8,8 @@
 
 [sub_resource type="DynamicFont" id=1]
 
-size = 25
-font = ExtResource( 4 )
+font/size = 30
+font/font = ExtResource( 4 )
 
 [node name="World" type="Node2D"]
 
@@ -25,6 +25,7 @@ script/script = ExtResource( 2 )
 [node name="player" parent="." instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 572.272, 554.209 )
+collision/margin = 0.08
 terrainPath = NodePath("../bg")
 
 [node name="gui_label" type="Label" parent="."]
@@ -35,11 +36,10 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 margin/left = 400.0
-margin/top = 750.0
+margin/top = 721.0
 margin/right = 883.0
 margin/bottom = 781.0
 custom_fonts/font = SubResource( 1 )
-text = "LABEL"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0

@@ -4,9 +4,9 @@
 [ext_resource path="res://Assets/terrain.gd" type="Script" id=2]
 [ext_resource path="res://Assets/rooms/desk/depth.png" type="Texture" id=3]
 [ext_resource path="res://Assets/rooms/desk/lights.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Assets/masks.gd" type="Script" id=5]
-[ext_resource path="res://Assets/rooms/desk/maskInvertAlpha.png" type="Texture" id=6]
-[ext_resource path="res://Assets/object.gd" type="Script" id=7]
+[ext_resource path="res://Assets/object.gd" type="Script" id=5]
+[ext_resource path="res://Assets/masks.gd" type="Script" id=6]
+[ext_resource path="res://Assets/rooms/desk/maskInvertAlpha.png" type="Texture" id=7]
 [ext_resource path="res://Assets/fonts/onesize.fnt" type="BitmapFont" id=8]
 [ext_resource path="res://Assets/debuglabel.gd" type="Script" id=9]
 
@@ -63,7 +63,6 @@ points = Vector2Array( -3.22983, -9.03849, -0.444061, -9.24316, 3.39578, -9.0896
 
 [node name="bg" type="Sprite"]
 
-visibility/light_mask = 7
 texture = ExtResource( 1 )
 centered = false
 region_rect = Rect2( 0, 0, 1280, 800 )
@@ -85,50 +84,6 @@ enabled = true
 
 [node name="Lights" parent="." instance=ExtResource( 4 )]
 
-[node name="Masks" type="Node2D" parent="."]
-
-visibility/light_mask = 524288
-transform/pos = Vector2( 1.36035, 2.7207 )
-z/relative = false
-script/script = ExtResource( 5 )
-
-[node name="CanvasModulate" type="CanvasModulate" parent="Masks"]
-
-visibility/light_mask = 0
-color = Color( 0.445312, 0.445312, 0.445312, 1 )
-
-[node name="mask_desk" type="Light2D" parent="Masks"]
-
-visibility/behind_parent = true
-visibility/light_mask = 0
-transform/pos = Vector2( 640, 400 )
-z/z = 4
-z/relative = false
-enabled = true
-texture = ExtResource( 6 )
-offset = Vector2( 0, 0 )
-scale = 1.0
-color = Color( 1, 1, 1, 1 )
-energy = 1.0
-mode = 3
-range/height = 0.0
-range/z_min = 1
-range/z_max = 5
-range/layer_min = 0
-range/layer_max = 0
-range/item_mask = 1
-shadow/enabled = false
-shadow/color = Color( 0, 0, 0, 0 )
-shadow/buffer_size = 2048
-shadow/esm_multiplier = 80.0
-shadow/item_mask = 524288
-__meta__ = { "_edit_lock_":true }
-
-[node name="Position2D" type="Position2D" parent="Masks/mask_desk"]
-
-transform/pos = Vector2( 63.6887, 246.515 )
-transform/scale = Vector2( 1, 0.826468 )
-
 [node name="Hotspots" type="Node2D" parent="."]
 
 [node name="shelf" type="Area2D" parent="Hotspots"]
@@ -142,7 +97,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-script/script = ExtResource( 7 )
+script/script = ExtResource( 5 )
 name = "Shelf"
 animation_arrived = "idle_leftfront"
 ScriptRes = "res://Assets/rooms/desk/objects/shelf.json"
@@ -178,7 +133,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-script/script = ExtResource( 7 )
+script/script = ExtResource( 5 )
 name = "Lamp"
 animation_arrived = "idle_rightfront"
 ScriptRes = "res://Assets/rooms/desk/objects/lamp.json"
@@ -216,7 +171,7 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
-script/script = ExtResource( 7 )
+script/script = ExtResource( 5 )
 name = "Statue"
 animation_arrived = "idle_up"
 ScriptRes = "res://Assets/rooms/desk/objects/statue.json"
@@ -235,6 +190,44 @@ trigger = false
 transform/pos = Vector2( -3.78668, 122.295 )
 transform/scale = Vector2( 0.736449, 0.565894 )
 
+[node name="Masks" type="Node2D" parent="."]
+
+visibility/light_mask = 524288
+transform/pos = Vector2( 1.36035, 2.7207 )
+z/relative = false
+script/script = ExtResource( 6 )
+
+[node name="mask_desk" type="Light2D" parent="Masks"]
+
+visibility/behind_parent = true
+visibility/light_mask = 0
+transform/pos = Vector2( 640, 400 )
+z/relative = false
+enabled = true
+texture = ExtResource( 7 )
+offset = Vector2( 0, 0 )
+scale = 1.0
+color = Color( 1, 1, 1, 1 )
+energy = 1.0
+mode = 3
+range/height = 0.0
+range/z_min = 1
+range/z_max = 5
+range/layer_min = 0
+range/layer_max = 5
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 524288
+__meta__ = { "_edit_lock_":true }
+
+[node name="Position2D" type="Position2D" parent="Masks/mask_desk"]
+
+transform/pos = Vector2( 63.6887, 246.515 )
+transform/scale = Vector2( 1, 0.826468 )
+
 [node name="Label" type="Label" parent="."]
 
 visibility/blend_mode = 1
@@ -246,7 +239,7 @@ margin/top = 0.0
 margin/right = 300.0
 margin/bottom = 48.0
 custom_fonts/font = ExtResource( 8 )
-text = "tregreg"
+text = "INFORMATION LABEL"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1

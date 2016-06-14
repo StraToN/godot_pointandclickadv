@@ -10,6 +10,7 @@ var animNode = "sprite/anim"
 ### DIALOGS
 var arr_lines
 var current_line
+onready var talking = false
 onready var timerNode = Timer.new()
 
 
@@ -32,6 +33,7 @@ const DEFAULT_SPEED = 150.0
 var speed = DEFAULT_SPEED
 
 func interact(target, action):
+	# get the list of actions of the target
 	var actionList = target.get_actions()
 	
 	if (!actionList.empty()):
@@ -39,18 +41,22 @@ func interact(target, action):
 			action = actionList[action]
 		printt("ACTION : ", action, "RESULT : ", actionList[action])
 		arr_lines = actionList[action]
-		say(actionList[action])
+		if (!talking):
+			talking = true
+			say(actionList[action])
 	else:
-		print("Warning: player.gd: interact: Hostspot '"+str(target.name)+"' has no script!")
+		print("Warning: player.gd: interact: Hotspot '"+str(target.name)+"' has no script!")
 	pass
 	
 func say(arr_lines):
 	var nbLines = arr_lines.size()
 	current_line = 0
-	say_line(arr_lines, current_line)
+	say_line(arr_lines)
 	
-func say_line(arr_lines, curr_line=0):
-	if (curr_line == arr_lines.size()):
+
+func say_line(arr_lines):
+	if (current_line == arr_lines.size()):
+		talking = false
 		return
 	var text = arr_lines[current_line]
 	print(text.length())
@@ -68,7 +74,7 @@ func on_dialog_line_timeout():
 	get_node("dialog").set_text("")
 	timerNode.stop()
 	current_line += 1
-	say_line(arr_lines, current_line)
+	say_line(arr_lines)
 
 func add_return_on_first_space(text, start_pos):
 	var space_pos = text.find(" ", start_pos)
