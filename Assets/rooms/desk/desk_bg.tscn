@@ -11,17 +11,17 @@
 [ext_resource path="res://Assets/fonts/onesize.fnt" type="BitmapFont" id=9]
 [ext_resource path="res://Assets/debuglabel.gd" type="Script" id=10]
 
-[sub_resource type="CanvasItemShader" id=2]
+[sub_resource type="CanvasItemShader" id=1]
 
 _code = { "fragment":"uniform texture bg;\nfloat alpha = tex(TEXTURE,UV).a;\nCOLOR = alpha*tex(bg,UV);", "fragment_ofs":0, "light":"", "light_ofs":0, "vertex":"", "vertex_ofs":0 }
 
-[sub_resource type="CanvasItemMaterial" id=3]
+[sub_resource type="CanvasItemMaterial" id=2]
 
-shader/shader = SubResource( 2 )
+shader/shader = SubResource( 1 )
 shader/shading_mode = 0
 shader_param/bg = ExtResource( 1 )
 
-[sub_resource type="NavigationPolygon" id=1]
+[sub_resource type="NavigationPolygon" id=3]
 
 vertices = Vector2Array( 952.264, 578.086, 1108.17, 663.667, 928.564, 627.336, 927.336, 588.048, 1083.26, 546.305, 1129.91, 572.088, 346.618, 546.305, 495.174, 586.82, 1277.24, 666.623, 1274.78, 797.991, 66.6943, 790.625, 486.58, 626.108 )
 polygons = [ IntArray( 0, 1, 2, 3 ), IntArray( 4, 5, 0, 6 ), IntArray( 6, 0, 3, 7 ), IntArray( 1, 8, 9, 10 ), IntArray( 2, 1, 10, 11 ), IntArray( 11, 10, 6, 7 ) ]
@@ -87,7 +87,7 @@ nbZScales = 8
 [node name="mask_test" type="Sprite" parent="."]
 
 visibility/visible = false
-material/material = SubResource( 3 )
+material/material = SubResource( 2 )
 transform/pos = Vector2( 0.36035, 0.7207 )
 z/z = 4
 z/relative = false
@@ -98,7 +98,7 @@ centered = false
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
 
-navpoly = SubResource( 1 )
+navpoly = SubResource( 3 )
 enabled = true
 
 [node name="Lights" parent="." instance=ExtResource( 5 )]
@@ -111,6 +111,7 @@ visibility/light_mask = 524288
 z/z = 1
 z/relative = false
 script/script = ExtResource( 6 )
+canvasmodulatePath = "../CanvasModulate"
 
 [node name="mask_desk" type="Light2D" parent="Masks"]
 
@@ -266,5 +267,9 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 script/script = ExtResource( 10 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+color = Color( 0.313726, 0.313726, 0.313726, 1 )
 
 

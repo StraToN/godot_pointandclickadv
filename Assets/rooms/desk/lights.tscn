@@ -139,10 +139,4 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-
-z/z = 1
-z/relative = false
-color = Color( 0.431373, 0.431373, 0.431373, 1 )
-
 
