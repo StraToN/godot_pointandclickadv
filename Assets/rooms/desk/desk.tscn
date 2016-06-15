@@ -2,14 +2,14 @@
 
 [ext_resource path="res://Assets/rooms/desk/desk_bg.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/debugnode.gd" type="Script" id=2]
-[ext_resource path="res://Assets/sprites/guybrush.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Assets/fonts/onesize/ONESIZE_.TTF" type="DynamicFontData" id=4]
-[ext_resource path="res://Assets/gui.gd" type="Script" id=5]
+[ext_resource path="res://Assets/fonts/onesize/ONESIZE_.TTF" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/gui.gd" type="Script" id=4]
+[ext_resource path="res://Assets/sprites/guybrush.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 
 font/size = 30
-font/font = ExtResource( 4 )
+font/font = ExtResource( 3 )
 
 [node name="World" type="Node2D"]
 
@@ -21,12 +21,6 @@ __meta__ = { "__editor_plugin_screen__":"Script" }
 
 z/z = 10
 script/script = ExtResource( 2 )
-
-[node name="player" parent="." instance=ExtResource( 3 )]
-
-transform/pos = Vector2( 572.272, 554.209 )
-collision/margin = 0.08
-terrainPath = NodePath("../bg")
 
 [node name="gui_label" type="Label" parent="."]
 
@@ -44,6 +38,11 @@ align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script/script = ExtResource( 5 )
+script/script = ExtResource( 4 )
+
+[node name="player" parent="." instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 569.769, 547.159 )
+terrainPath = NodePath("../bg")
 
 

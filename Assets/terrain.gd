@@ -41,7 +41,5 @@ func _ready():
 	# bg is now ready, notify actors to rescale them automatically according to their positions
 	get_tree().call_group(0, "Actors", "_update_scale", null)
 	get_tree().call_group(0, "Actors", "_update_z")
-	
-	get_node("Masks").init_masks()
 		
 	pass
